@@ -7,7 +7,6 @@ import Card from "./Card";
 
 import { getDatabase, ref, onValue } from "firebase/database";
 import { app } from "../firebaseConfig";
-import PollingStation from "../modals/PollingStation";
 
 
 const Places = ({navigation}) => {
@@ -34,10 +33,6 @@ const Places = ({navigation}) => {
       setPlacesData(placesArray);
     });
 
-    // Cleanup function to remove the listener when component unmounts
-    // return () => onValue(dbRef, () => {}); // Passing an empty function to remove the listener
-    // return; // Passing an empty function to remove the listener
-    
   }, []);
 
   const handleCardClick = (place) => {
@@ -68,9 +63,6 @@ const Places = ({navigation}) => {
           </TouchableOpacity>
         ))}
 
-        {/* <Card navigation={navigation} contentTitle={contentTitle} ac={AC} /> */}
-        {/* <Card navigation={navigation} contentTitle={contentTitle} ac={AC} /> */}
-        {/* <Card navigation={navigation} /> */}
       </View>
     </View>
   );

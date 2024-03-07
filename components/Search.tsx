@@ -9,7 +9,7 @@ import React from "react";
 import CustomTabBarIcon from "../constants/Icons";
 import Colours from "../constants/Colours";
 
-const Search = () => {
+const Search = (props) => {
   return (
     <View style={style.searchContainer}>
       <View style={style.searchHeading}>
@@ -22,7 +22,7 @@ const Search = () => {
           size={30}
           color={Colours.light}
         />
-        <Text style={style.searchHeadingTxt}>Explore</Text>
+        <Text style={style.searchHeadingTxt}>{props.contentTitle}</Text>
       </View>
 
       <View style={style.searchBoxContainer}>
