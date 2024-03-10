@@ -3,7 +3,7 @@ import {
   ScrollView,
 } from "react-native";
 import React from "react";
-import ContactCard from "./ContactCard";
+import ContactCard from "../components/ContactCard";
 
 import { Dimensions } from 'react-native';
 

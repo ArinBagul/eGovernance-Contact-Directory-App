@@ -64,7 +64,10 @@ const style = StyleSheet.create({
     color: Colours.light,
     fontSize: 22,
     fontWeight: "bold",
+    marginRight: 15,
+    // backgroundColor: "red"
   },
+  
   searchBoxContainer: {
     marginBottom: 10,
   },

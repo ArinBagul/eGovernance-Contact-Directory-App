@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import React, { PureComponent } from "react";
+import { NavigationContainerRef } from "@react-navigation/native";
 
 import Colours from "../constants/Colours";
 import { LinearGradient } from "expo-linear-gradient";
@@ -11,14 +12,20 @@ interface Data {
 
 interface Props {
   data: Data;
+  navigation : NavigationContainerRef;
 }
 
 class ListItem extends PureComponent<Props> {
   // console.log(title)
+  
   render() {
-    const { data } = this.props;
+    const { data,navigation } = this.props;
+    const handlePress=(data)=>{
+      navigation.navigate("ContactList",{data:data});
+    }
+    
     return (
-      <TouchableOpacity>
+      <TouchableOpacity onPress={()=>{handlePress(data)}}>
         <LinearGradient
           colors={["#007EC5", "#002D47", "#002D47"]}
           start={{ x: -0.5, y: 0 }}

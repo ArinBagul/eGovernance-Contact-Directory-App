@@ -9,7 +9,7 @@ const Explore = () => {
   return (
     <View>
       <StatusBar backgroundColor={Colours.dark} barStyle="light-content" />
-      <Search />
+      <Search contentTitle="Explore"/>
       <Contacts />
     </View>
   );

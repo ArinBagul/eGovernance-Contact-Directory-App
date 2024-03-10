@@ -14,6 +14,8 @@ import Colours from "../constants/Colours";
 import ListItem from "../components/ListItem";
 import { DataSnapshot, getDatabase, onValue, ref } from "firebase/database";
 import { app } from "../firebaseConfig";
+import BottomNavigation from "../BottomNavigation";
+import { NavigationContainer } from "@react-navigation/native";
 
 const PollingStation = ({ route, navigation }) => {
   const contentTitle = route.params.data; // name of the place "Agar"
@@ -54,7 +56,7 @@ const PollingStation = ({ route, navigation }) => {
         
       <FlatList 
           data={ps} 
-          renderItem={({ item, index }) => <ListItem data={item} key={`${item}_${index}`} />}
+          renderItem={({ item, index }) => <ListItem data={item} navigation={navigation} key={`${item}_${index}`} />}
           initialNumToRender={12} // Number of items to render initially
           maxToRenderPerBatch={10} // Number of items to render per batch
           windowSize={12} // Number of offscreen items kept in memory

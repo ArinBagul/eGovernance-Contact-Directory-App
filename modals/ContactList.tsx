@@ -1,10 +1,14 @@
-import { View, Text } from 'react-native'
+import { View, Text, FlatList } from 'react-native'
 import React from 'react'
+import Search from '../components/Search'
+import ContactCard from '../components/ContactCard';
 
-const ContactList = () => {
+const ContactList = ({route}) => {
+  const data = route.params.data;
   return (
     <View>
-      <Text>ContactList</Text>
+      <Search contentTitle={`${data.boothName},${data.boothAd}`} />
+      <ContactCard />
     </View>
   )
 }
