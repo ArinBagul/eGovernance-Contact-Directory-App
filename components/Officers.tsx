@@ -4,7 +4,12 @@ import CustomTabBarIcon from "../constants/Icons";
 import Colours from "../constants/Colours";
 import { LinearGradient } from "expo-linear-gradient";
 
-const Officers = () => {
+const Officers = ({navigation}) => {
+
+  const handleDLNOPress = () => {
+    navigation.navigate("Dlno",navigation)
+  }
+
   return (
     <View style={style.officersContainer}>
       <View style={style.OfficerSectionHeading}>
@@ -31,7 +36,7 @@ const Officers = () => {
           </LinearGradient>
         </TouchableOpacity>
         
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleDLNOPress}>
           <LinearGradient
             colors={["#CECECE", "#DCDCDC", "#F2F2F2"]}
             start={{x:0.01,y:0.01}}

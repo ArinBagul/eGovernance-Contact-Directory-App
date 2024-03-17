@@ -17,7 +17,7 @@ const Home = ({navigation}) => {
         <Banner/>
         <Recent/>
         <Places navigation={navigation} />
-        <Officers/>
+        <Officers navigation={navigation}/>
       </View>
     </View>
   )

@@ -1,17 +1,21 @@
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect } from '@react-navigation/native';
 // import ContactCard from '../components/ContactCard';
-
 
 const Favourites = () => {
 
   const [favorites, setFavorites] = useState([]);
 
-  useEffect(() => {
-    loadFavorites();
-  }, []);
+  // Load favorites data when the screen is focused
+  useFocusEffect(
+    React.useCallback(() => {
+      loadFavorites();
+    }, [])
+  );
 
+  // Function to load favorites from AsyncStorage
   const loadFavorites = async () => {
     try {
       const favoritesString = await AsyncStorage.getItem('favorites');
@@ -22,41 +26,57 @@ const Favourites = () => {
     }
   };
 
+  // Function to remove a contact from favorites
+  const removeFromFavorites = async (numberToRemove) => {
+    try {
+      const updatedFavorites = favorites.filter((fav) => fav.number !== numberToRemove);
+      await AsyncStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+      setFavorites(updatedFavorites);
+    } catch (error) {
+      console.error('Error removing from favorites:', error);
+    }
+  };
+
+  // Render function for each contact
   const renderContact = ({ item }) => {
-    // return <ContactCard contact={item} />;
-    return(
-    <View style={styles.contactContainer}>
+    return (
+      <View style={styles.contactContainer}>
         <Text style={styles.name}>{item.name}</Text>
         <Text>{item.designation}</Text>
         <Text>{item.position}</Text>
         <Text style={styles.number}>{item.number}</Text>
-      </View>)
+        <TouchableOpacity onPress={() => removeFromFavorites(item.number)} style={styles.removeButton}>
+          <Text style={styles.removeButtonText}>Remove from Favorites</Text>
+        </TouchableOpacity>
+      </View>
+    );
   };
 
+  // Return the component JSX
   return (
     <View style={styles.container}>
-      {favorites.length > 0 ? (
-        <FlatList
-          data={favorites}
-          renderItem={renderContact}
-          // keyExtractor={(item) => item}
-          contentContainerStyle={styles.listContainer}
-        />
-      ) : (
-        <Text>No favorites yet</Text>
-      )}
+      <FlatList
+        data={favorites}
+        renderItem={renderContact}
+        keyExtractor={(item) => item.number}
+        contentContainerStyle={favorites.length === 0 && styles.emptyContainer}
+        ListEmptyComponent={<Text style={styles.noFavoritesText}>No favorites yet</Text>}
+      />
     </View>
   );
 };
 
+// Define the component styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
     backgroundColor: '#fff',
   },
-  listContainer: {
-    flexGrow: 1,
+  emptyContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   contactContainer: {
     paddingVertical: 10,
@@ -70,12 +90,22 @@ const styles = StyleSheet.create({
   number: {
     color: '#666',
   },
+  removeButton: {
+    marginTop: 10,
+    backgroundColor: '#ff6961',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 5,
+    alignSelf: 'flex-start',
+  },
+  removeButtonText: {
+    color: '#fff',
+  },
   noFavoritesText: {
     textAlign: 'center',
     marginTop: 20,
     fontSize: 18,
   },
 });
-
 
 export default Favourites

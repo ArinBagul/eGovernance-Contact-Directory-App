@@ -1,6 +1,8 @@
 import {
   StyleSheet,
   ScrollView,
+  View,
+  Text,
 } from "react-native";
 import React from "react";
 import ContactCard from "../components/ContactCard";
@@ -15,14 +17,9 @@ const scrollViewHeight = windowHeight - tabBarHeight;
 
 const Contacts = () => {
   return (
-    <ScrollView style={style.contactCardsContainer}>
-      <ContactCard />
-      <ContactCard />
-      <ContactCard />
-      <ContactCard />
-      <ContactCard />
-      <ContactCard />
-    </ScrollView>
+    <View>
+      <Text>Waiting for data</Text>
+    </View>
   );
 };
 
