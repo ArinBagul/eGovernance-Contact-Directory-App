@@ -46,16 +46,6 @@ const DlnoDetails = ({ route }) => {
     };
   }, [team, teamMembersRef]);
 
-  const renderItem = ({ item }) => (
-    <View>
-      <Text>Name: {item.name}</Text>
-      <Text>Mobile Number: {item.mobileNumber}</Text>
-      <Text>Office: {item.office}</Text>
-      <Text>Position: {item.position}</Text>
-      <Text>Role: {item.role}</Text>
-    </View>
-  );
-
   return (
     <View>
       <Search contentTitle={team} />

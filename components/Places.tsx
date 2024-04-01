@@ -133,7 +133,7 @@ const style = StyleSheet.create({
     flexDirection: "row",
     gap: 20,
     flexWrap: "wrap",
-    justifyContent: "space-between",
+    justifyContent: "space-evenly",
     paddingHorizontal: 20,
   },
   modalContainer: {
