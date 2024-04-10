@@ -19,7 +19,6 @@ import { NavigationContainer } from "@react-navigation/native";
 
 const PollingStation = ({ route, navigation }) => {
   const contentTitle = route.params.data; // name of the place "Agar"
-
   const [ps, setPs] = useState([]);
   const [loading, setLoading] = useState(true);
 

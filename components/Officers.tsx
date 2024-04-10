@@ -7,7 +7,10 @@ import { LinearGradient } from "expo-linear-gradient";
 const Officers = ({navigation}) => {
 
   const handleDLNOPress = () => {
-    navigation.navigate("Dlno",navigation)
+    navigation.navigate("Dlno")
+  }
+  const handleIMPOPress = () => {
+    navigation.navigate("Impo")
   }
 
   return (
@@ -26,7 +29,7 @@ const Officers = ({navigation}) => {
       </View>
 
       <View style={style.officersCardContainer}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleIMPOPress}>
           <LinearGradient
             colors={["#FFFBA4", "#CCB15A", "#B28A33"]}
             start={{x:0.01,y:0.01}}

@@ -41,9 +41,9 @@ const Places = ({ navigation }) => {
     });
   }, []);
 
-  const handlePSCardClick = (place) => {
+  const handlePSCardClick = (place, target) => {
     setIsOpenModal(false);
-    navigation.navigate("PollingStation", {
+    navigation.navigate(target, {
       data: place.place,
     });
   };
@@ -71,10 +71,10 @@ const Places = ({ navigation }) => {
               />
             </TouchableOpacity>
             <View style={style.CardContainer}>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => handlePSCardClick(place, "Aco")}>
                 <Card contentTitle="AC Level" pc="ACO" />
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => handlePSCardClick(place)}>
+              <TouchableOpacity onPress={() => handlePSCardClick(place,"PollingStation")}>
                 <Card contentTitle="Polling Stations" pc="PS" />
               </TouchableOpacity>
             </View>

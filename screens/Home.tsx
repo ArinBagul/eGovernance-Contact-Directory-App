@@ -15,7 +15,7 @@ const Home = ({navigation}) => {
       <View style={style.appContainer}>
         <Header/>
         <Banner/>
-        <Recent/>
+        <Recent navigation={navigation}/>
         <Places navigation={navigation} />
         <Officers navigation={navigation}/>
       </View>

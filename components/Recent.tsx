@@ -2,8 +2,9 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import CustomTabBarIcon from "../constants/Icons";
 import Colours from "../constants/Colours";
+import Explore from "../screens/Explore";
 
-const Recent = () => {
+const Recent = ({navigation}) => {
   return (
     <View>
       <View style={style.recentHead}>
@@ -21,7 +22,7 @@ const Recent = () => {
 
       <View style={style.recentMessage}>
         <Text style={style.messageTxt}>Haven’t explored yet?</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={ () => navigation.navigate(Explore)}>
           <Text style={[style.messageTxt, style.messageTxtClickable]}>
             Explore Now
           </Text>

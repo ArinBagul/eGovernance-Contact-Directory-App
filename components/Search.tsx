@@ -5,11 +5,31 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CustomTabBarIcon from "../constants/Icons";
 import Colours from "../constants/Colours";
 
 const Search = (props) => {
+  // console.log(props.data)
+  const { data, setFilteredContacts } = props;
+  const [searchQuery, setSearchQuery] = useState('');
+  
+  useEffect(() => {
+    filterContacts();
+  }, [searchQuery]);
+
+  const filterContacts = () => {
+    if(data){
+    const filteredContacts = data.filter(contact =>
+      (contact.name && contact.name.includes(searchQuery)) ||
+      (contact.position && contact.position.includes(searchQuery)) ||
+      (contact.role && contact.role.includes( searchQuery )) ||
+      (contact.psAddress && contact.psAddress.includes( searchQuery ))
+    );
+    setFilteredContacts(filteredContacts);}
+  };
+
+  
   return (
     <View style={style.searchContainer}>
       <View style={style.searchHeading}>
@@ -31,6 +51,8 @@ const Search = (props) => {
           caretHidden={false}
           selectionColor={Colours.lightBlue}
           placeholder="Type to search"
+          onChangeText={setSearchQuery}
+          value={searchQuery}
         />
         <TouchableOpacity style={style.searchBtn}>
           <CustomTabBarIcon
