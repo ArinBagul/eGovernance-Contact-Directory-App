@@ -14,7 +14,11 @@ const Contacts = (props) => {
   return (
     <View>
       {contactData.length === 0 ? (
-        <Text>Loading...</Text>
+        <Text style={{
+          marginTop: 15,
+          textAlign: 'center',
+          
+        }}>Exploring...</Text>
       ) : (
         <FlatList
           data={contactData}

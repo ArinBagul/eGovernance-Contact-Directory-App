@@ -54,18 +54,18 @@ const ContactList = ({route}) => {
   }, []);
 
   if (loading) {
-    return <Text>Loading...</Text>;
+    return <Text style={styles.status}>Loading...</Text>;
   }
 
   if (error) {
-    return <Text>Error: {error}</Text>;
+    return <Text style={styles.status}>Error: {error}</Text>;
   }
 
   return (
     <View>
       <Search contentTitle={`${data.boothName},${data.boothAd}`} />
       {pso.length === 0 ? (
-        <Text>No data found</Text>
+        <Text style={styles.statusND}>No data found</Text>
       ) :  <FlatList
         data={pso}
         renderItem={({ item }) => (
@@ -77,5 +77,22 @@ const ContactList = ({route}) => {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  status:{
+    textAlign: 'center',
+    // marginTop: 20,
+    flex: 1,
+    textAlignVertical: 'center'
+    // backgroundColor: 'red'
+  },
+  statusND:{
+    textAlign: 'center',
+    marginTop: 20,
+    // flex: 1,
+    // textAlignVertical: 'center'
+    // backgroundColor: 'red'
+  }
+})
 
 export default ContactList

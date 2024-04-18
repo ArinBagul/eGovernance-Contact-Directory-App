@@ -1,9 +1,11 @@
-import { View, Text, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, FlatList, ActivityIndicator, StatusBar } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native'; // Import useFocusEffect
 import Search from '../components/Search';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ContactCard from '../components/ContactCard';
+import Colours from '../constants/Colours';
+import { FocusAwareStatusBar } from '../App';
 
 const Favourites = ({ navigation }) => { // Assuming you're using navigation prop
   const [filteredContacts, setFilteredContacts] = useState([]);
@@ -40,6 +42,7 @@ const Favourites = ({ navigation }) => { // Assuming you're using navigation pro
 
   return (
     <View>
+      <FocusAwareStatusBar backgroundColor={Colours.dark} barStyle="light-content" animated={true} />
       <Search contentTitle="Favourites" data={favoriteItems} setFilteredContacts={setFilteredContacts} />
       <View style={styles.favContainer}>
         {loading ? (

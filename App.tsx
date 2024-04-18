@@ -1,4 +1,4 @@
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useIsFocused } from '@react-navigation/native';
 import BottomNavigation from './BottomNavigation';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -10,6 +10,13 @@ import Dlno from './modals/Dlno';
 import DlnoDetails from './modals/DlnoDetails';
 import Aco from './modals/Aco';
 import Impo from './modals/Impo';
+import { StatusBar } from 'react-native';
+
+export function FocusAwareStatusBar(props) {
+  const isFocused = useIsFocused();
+
+  return isFocused ? <StatusBar {...props} /> : null;
+}
 
 const Stack = createNativeStackNavigator()
 

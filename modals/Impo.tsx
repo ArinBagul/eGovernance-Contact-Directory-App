@@ -51,7 +51,7 @@ const Impo = () => {
   }, []);
 
   if (loading) {
-    return <Text>Loading...</Text>;
+    return <Text style={{flex:1,textAlign:'center', textAlignVertical: 'center'}}>Loading...</Text>;
   }
 
   if (error) {

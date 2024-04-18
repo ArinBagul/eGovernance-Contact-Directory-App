@@ -8,7 +8,7 @@ const Header = () => {
     const currentTime = new Date().getHours();
     let greeting;
 
-    if (currentTime < 12) {
+    if (currentTime > 4 && currentTime < 12) {
       greeting = "Good Morning";
     } else if (currentTime < 18) {
       greeting = "Good Afternoon";

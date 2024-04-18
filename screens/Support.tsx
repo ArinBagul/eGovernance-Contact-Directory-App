@@ -1,30 +1,84 @@
-import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
-import React from "react";
+import { View, Text, Image, TouchableOpacity, StyleSheet, Linking, StatusBar } from "react-native";
+import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import Colours from "../constants/Colours";
 
+import { getDatabase, ref, get } from "firebase/database";
+import { app } from "../firebaseConfig";
+import { FocusAwareStatusBar } from "../App";
+
 const Support = () => {
+  const [supportData,setSupportData] = useState([])
+  const db = getDatabase();
+
+  const fetchSupportData = async (supportRef) => {
+    const snapshot = await get(supportRef);
+    const dataSnapshot = snapshot.val();
+    const formattedData = [];
+
+    // Convert dataSnapshot to an array
+    Object.keys(dataSnapshot).forEach((supportKey) => {
+      const supportData = dataSnapshot[supportKey];
+      // console.log(supportData.team);
+      formattedData.push({
+        id: supportKey,
+        email: supportData.email,
+        phone: supportData.phone,
+        supportText: supportData.supportText,
+      });
+    });
+
+    setSupportData(formattedData)
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const supportRef = ref(db, "support"); // Assuming 'dlno' is Firebase database node
+      
+      try {
+        fetchSupportData(supportRef);
+
+        // Update state with formatted data
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // console.log(supportData)
+  const handleEmailPress = () => {
+    // Linking.openURL(`tel:${number}`)
+    Linking.openURL(`mailto:${supportData[0].email}`);
+  };
+  const handleCallPress = () => {
+    // Linking.openURL(`tel:${number}`)
+    Linking.openURL(`tel:${supportData[0].phone}`);
+  };
+  // console.log(supportData);
+  
   return (
     <View style={styles.supportContainer}>
+      <FocusAwareStatusBar backgroundColor={Colours.light} barStyle="dark-content" animated={true} />
       <Header />
       
       <Image style={styles.img} source={require("../assets/Images/support.png")} />
 
       <Text style={styles.headingTxt}>Are you facing any problem?</Text>
       <Text style={styles.paraTxt}>
-        If you need instant support then use chat option to reach us quickly.
-        Our support will reply as soon as possible after you send us a message.
+        {supportData.length > 0 ? supportData[0].supportText : ""}
       </Text>
 
       <View style={styles.btnContainer}>
 
-      <TouchableOpacity style={styles.btn}>
-        <Text style={styles.btnTxtB}>Email: <Text style={styles.btnTxt}>support@email.com</Text></Text>
-      </TouchableOpacity>
+      <TouchableOpacity style={styles.btn} onPress={handleEmailPress}>
+  <Text style={styles.btnTxtB}>Email: <Text style={styles.btnTxt}>{supportData.length > 0 ? supportData[0].email : "support@email.com"}</Text></Text>
+</TouchableOpacity>
 
-      <TouchableOpacity style={styles.btn}>
-        <Text style={styles.btnTxtB}>Phone: <Text style={styles.btnTxt}>+91 12345 67890</Text></Text>
-      </TouchableOpacity>
+<TouchableOpacity style={styles.btn} onPress={handleCallPress}>
+  <Text style={styles.btnTxtB}>Phone: <Text style={styles.btnTxt}>{supportData.length > 0 ? supportData[0].phone : "9871234506"}</Text></Text>
+</TouchableOpacity>
 
       </View>
 

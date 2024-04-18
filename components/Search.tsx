@@ -24,7 +24,8 @@ const Search = (props) => {
       (contact.name && contact.name.includes(searchQuery)) ||
       (contact.position && contact.position.includes(searchQuery)) ||
       (contact.role && contact.role.includes( searchQuery )) ||
-      (contact.psAddress && contact.psAddress.includes( searchQuery ))
+      (contact.psAddress && contact.psAddress.includes( searchQuery )) ||
+      (contact.team && contact.team.some(item => item.includes(searchQuery)))
     );
     setFilteredContacts(filteredContacts);}
   };

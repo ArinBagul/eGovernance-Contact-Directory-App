@@ -7,6 +7,7 @@ import { app } from "../firebaseConfig";
 import Search from "../components/Search";
 import Colours from "../constants/Colours";
 import Contacts from "./Contacts";
+import { FocusAwareStatusBar } from "../App";
 
 const Explore = () => {
   const [filteredContacts, setFilteredContacts] = useState([]);
@@ -35,6 +36,29 @@ const Explore = () => {
     });
     setAllContacts((prevContacts) => [...prevContacts, ...formattedData]);
   };
+
+  const fetchAcoData = async (acRef) => {
+    const snapshot = await get(acRef);
+    const dataSnapshot = snapshot.val();
+    const formattedData = [];
+
+    // Convert dataSnapshot to an array
+    Object.keys(dataSnapshot).forEach((acKey) => {
+      const acData = dataSnapshot[acKey];
+      // console.log(acData.team);
+      Object.keys(acData).forEach((key) => {
+        formattedData.push({
+          id: key,
+          name: acData[key].name,
+          mobileNumber: acData[key].mobileNumber,
+          role: acData[key].designation,
+          position: acData[key].acName,
+        });
+      });
+    });
+    setAllContacts((prevContacts) => [...prevContacts, ...formattedData]);
+  };
+
   const fetchDlnoData = async (dlnoRef) => {
     const snapshot = await get(dlnoRef);
     const dataSnapshot = snapshot.val();
@@ -47,10 +71,31 @@ const Explore = () => {
       formattedData.push({
         id: dlnoKey,
         name: dlnoData.name,
-        // team: dlnoData.team,
+        team: dlnoData.team,
         role: dlnoData.role,
         position: dlnoData.position,
         mobileNumber: dlnoData.mobileNumber,
+      });
+    });
+
+    setAllContacts((prevContacts) => [...prevContacts,...formattedData]);
+  };
+
+  const fetchImpoData = async (impoRef) => {
+    const snapshot = await get(impoRef);
+    const dataSnapshot = snapshot.val();
+    const formattedData = [];
+
+    // Convert dataSnapshot to an array
+    Object.keys(dataSnapshot).forEach((impoKey) => {
+      const impoData = dataSnapshot[impoKey];
+      // console.log(impoData.team);
+      formattedData.push({
+        id: impoKey,
+        name: impoData.name,
+        role: impoData.designation,
+        position: 'IMP Officer',
+        mobileNumber: impoData.mobileNumber,
       });
     });
 
@@ -61,9 +106,13 @@ const Explore = () => {
     const fetchData = async () => {
       const psoRef = ref(db, "pso"); // Assuming 'dlno' is Firebase database node
       const dlnoRef = ref(db, "dlno"); // Assuming 'dlno' is Firebase database node
+      const acRef = ref(db, "ac"); // Assuming 'aco' is Firebase database node
+      const impoRef = ref(db, "impo"); // Assuming 'aco' is Firebase database node
       try {
         fetchPsoData(psoRef);
         fetchDlnoData(dlnoRef);
+        fetchAcoData(acRef);
+        fetchImpoData(impoRef);
 
         // Update state with formatted data
       } catch (error) {
@@ -79,11 +128,11 @@ const Explore = () => {
     setFilteredContacts(allContacts);
   }, [allContacts]);
 
-    // console.log(filteredContacts);
+    // console.log(filteredContacts[400].team.includes("मटेरियल मैनेजमेंट"));
     
   return (
     <View>
-      <StatusBar backgroundColor={Colours.dark} barStyle="light-content" />
+      <FocusAwareStatusBar backgroundColor={Colours.dark} barStyle="light-content" animated={true} />
       <Search contentTitle="Explore" data={allContacts} setFilteredContacts={setFilteredContacts}  />
       <Contacts data={filteredContacts} />
     </View>
