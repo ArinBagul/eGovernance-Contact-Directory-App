@@ -56,7 +56,7 @@ const Favourites = ({ navigation }) => { // Assuming you're using navigation pro
             keyExtractor={(item) => String(item.id)} // Assuming 'id' is the unique identifier of your items
           />
         ) : (
-          <Text style={styles.status}>No favorites found</Text>
+          <Text style={styles.status}>Oops! <Text style={styles.boldMsg}>No favorites</Text> here yet</Text>
         )}
       </View>
     </View>
@@ -68,9 +68,22 @@ const styles = StyleSheet.create({
     
   },
   status:{
-    textAlign: 'center',
     marginTop: 20,
-  }
+    backgroundColor: Colours.lightBlue,
+    textAlign: 'center',
+    width: 250,
+    paddingHorizontal: 30,
+    paddingVertical: 10,
+    borderRadius: 30,
+    alignItems: "center",
+    alignSelf: "center",
+    fontSize: 14,
+    color: Colours.lighterDark,
+  },
+  boldMsg:{
+    color: Colours.lighterDark,
+    fontWeight: "bold",
+  },
 })
 
 export default Favourites;

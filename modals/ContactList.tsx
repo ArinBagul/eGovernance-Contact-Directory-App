@@ -5,6 +5,8 @@ import { getDatabase, ref, onValue, off } from "firebase/database";
 import { app } from "../firebaseConfig";
 
 import ContactCard from '../components/ContactCard';
+import { FocusAwareStatusBar } from "../App";
+import Colours from "../constants/Colours";
 
 const ContactList = ({route}) => {
   const data = route.params.data;
@@ -63,6 +65,7 @@ const ContactList = ({route}) => {
 
   return (
     <View>
+      <FocusAwareStatusBar backgroundColor={Colours.dark} barStyle="light-content" animated={true} />
       <Search contentTitle={`${data.boothName},${data.boothAd}`} />
       {pso.length === 0 ? (
         <Text style={styles.statusND}>No data found</Text>

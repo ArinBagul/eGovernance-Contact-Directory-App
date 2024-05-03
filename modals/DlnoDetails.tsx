@@ -10,6 +10,8 @@ import {
 import { app } from "../firebaseConfig";
 import Search from "../components/Search";
 import ContactCard from "../components/ContactCard";
+import { FocusAwareStatusBar } from "../App";
+import Colours from "../constants/Colours";
 
 const DlnoDetails = ({ route }) => {
   const data = route.params;
@@ -60,6 +62,7 @@ const DlnoDetails = ({ route }) => {
 
   return (
     <View>
+      <FocusAwareStatusBar backgroundColor={Colours.dark} barStyle="light-content" animated={true} />
       <Search contentTitle={data.team} />
       <FlatList
         data={teamMembers}

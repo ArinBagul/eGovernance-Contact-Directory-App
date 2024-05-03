@@ -10,8 +10,8 @@ import CustomTabBarIcon from "../constants/Icons";
 import Colours from "../constants/Colours";
 
 const Search = (props) => {
-  // console.log(props.data)
-  const { data, setFilteredContacts } = props;
+  // console.log(props)
+  const { data, setFilteredContacts, setFilteredPs } = props;
   const [searchQuery, setSearchQuery] = useState('');
   
   useEffect(() => {
@@ -25,12 +25,13 @@ const Search = (props) => {
       (contact.position && contact.position.includes(searchQuery)) ||
       (contact.role && contact.role.includes( searchQuery )) ||
       (contact.psAddress && contact.psAddress.includes( searchQuery )) ||
-      (contact.team && contact.team.some(item => item.includes(searchQuery)))
+      (contact.team && contact.team.some(item => item.includes(searchQuery))) ||
+      (contact.boothName && contact.boothName.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      (contact.boothAd && contact.boothAd.toLowerCase().includes(searchQuery.toLowerCase()))
     );
     setFilteredContacts(filteredContacts);}
   };
 
-  
   return (
     <View style={style.searchContainer}>
       <View style={style.searchHeading}>
@@ -55,6 +56,7 @@ const Search = (props) => {
           onChangeText={setSearchQuery}
           value={searchQuery}
         />
+
         <TouchableOpacity style={style.searchBtn}>
           <CustomTabBarIcon
             icon={`<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">

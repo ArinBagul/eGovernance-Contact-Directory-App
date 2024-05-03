@@ -5,6 +5,8 @@ import Search from "../components/Search";
 import { getDatabase, ref, onValue, off } from 'firebase/database';
 import { app } from '../firebaseConfig';
 import ContactCard from '../components/ContactCard';
+import { FocusAwareStatusBar } from '../App';
+import Colours from '../constants/Colours';
 
 
 const Aco = ({ route, navigation }) => {
@@ -69,6 +71,7 @@ const Aco = ({ route, navigation }) => {
 
   return (
     <View>
+      <FocusAwareStatusBar backgroundColor={Colours.dark} barStyle="light-content" animated={true} />
       <Search contentTitle={`ACO: ${modalData}`} data={aco} setFilteredContacts={setFilteredContacts} />
       {filteredContacts.length === 0 ? (
         <Text style={styles.errorContainer} >No data found</Text>

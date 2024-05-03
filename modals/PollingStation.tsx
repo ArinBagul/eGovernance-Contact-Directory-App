@@ -16,10 +16,12 @@ import { DataSnapshot, getDatabase, onValue, ref } from "firebase/database";
 import { app } from "../firebaseConfig";
 import BottomNavigation from "../BottomNavigation";
 import { NavigationContainer } from "@react-navigation/native";
+import { FocusAwareStatusBar } from "../App";
 
 const PollingStation = ({ route, navigation }) => {
   const contentTitle = route.params.data; // name of the place "Agar"
   const [ps, setPs] = useState([]);
+  const [filteredContacts, setFilteredContacts] = useState([])
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -37,6 +39,10 @@ const PollingStation = ({ route, navigation }) => {
     return unsubscribe;
   }, []);
 
+  useEffect(() => {
+    setFilteredContacts(ps);
+  }, [ps]);
+
   if (loading) {
     return (
       <View style={style.loadingContainer}>
@@ -45,23 +51,23 @@ const PollingStation = ({ route, navigation }) => {
     );
   }
 
-  
-  // console.log(boothNames)
-
   return (
     <View>
-      <Search contentTitle={`${contentTitle} Polling Stations`} />
+      <FocusAwareStatusBar backgroundColor={Colours.dark} barStyle="light-content" animated={true} />
+      <Search contentTitle={`${contentTitle} Polling Stations`} data={ps} setFilteredContacts={setFilteredContacts} />
       <View style={style.placeCardContainer}>
-        
-      <FlatList 
-          data={ps} 
+
+      {filteredContacts.length>0 ? <FlatList 
+          data={filteredContacts} 
           renderItem={({ item, index }) => <ListItem data={item} navigation={navigation} key={`${item}_${index}`} />}
           initialNumToRender={12} // Number of items to render initially
           maxToRenderPerBatch={10} // Number of items to render per batch
           windowSize={12} // Number of offscreen items kept in memory
           removeClippedSubviews={true} // Unmount components when they are outside of the viewport
           style={style.flatListContainer}
-        />
+        /> : <Text style={style.status}>We couldn't find any <Text style={style.boldMsg}>Polling Station(s)</Text> with that name.</Text>}
+        
+      
         
       </View>
     </View>
@@ -84,6 +90,22 @@ const style = StyleSheet.create({
   },
   flatListContainer:{
     marginBottom: 290,
+  },
+  status:{
+    backgroundColor: Colours.lightBlue,
+    textAlign: 'center',
+    width: 250,
+    paddingHorizontal: 30,
+    paddingVertical: 10,
+    borderRadius: 30,
+    alignItems: "center",
+    alignSelf: "center",
+    fontSize: 14,
+    color: Colours.lighterDark,
+  },
+  boldMsg:{
+    color: Colours.lighterDark,
+    fontWeight: "bold",
   },
 });
 

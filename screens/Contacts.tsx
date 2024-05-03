@@ -3,6 +3,7 @@ import React from "react";
 import ContactCard from "../components/ContactCard";
 
 import { Dimensions } from "react-native";
+import Colours from "../constants/Colours";
 
 const windowHeight = Dimensions.get("window").height;
 const tabBarHeight = 170; // Adjust this value based on your bottom tab bar's height
@@ -14,11 +15,25 @@ const Contacts = (props) => {
   return (
     <View>
       {contactData.length === 0 ? (
-        <Text style={{
-          marginTop: 15,
-          textAlign: 'center',
-          
-        }}>Exploring...</Text>
+        <Text
+          style={{
+            backgroundColor: Colours.lightBlue,
+            textAlign: "center",
+            paddingHorizontal: 30,
+            paddingVertical: 10,
+            borderRadius: 30,
+            alignItems: "center",
+            alignSelf: "center",
+            fontSize: 14,
+            color: Colours.lighterDark,
+          }}
+        >
+          Let's{" "}
+          <Text style={{ color: Colours.lighterDark, fontWeight: "bold" }}>
+            Explore
+          </Text>{" "}
+          a bit more!
+        </Text>
       ) : (
         <FlatList
           data={contactData}

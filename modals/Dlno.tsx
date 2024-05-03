@@ -5,6 +5,7 @@ import { getDatabase, ref, onValue, off } from "firebase/database";
 import { app } from "../firebaseConfig";
 import Colours from '../constants/Colours';
 import Search from "../components/Search";
+import { FocusAwareStatusBar } from "../App";
 
 interface Team {
   id: string;
@@ -78,6 +79,7 @@ const Dlno: React.FC<{ navigation: any }> = ({ navigation }) => {
 
   return (
     <View>
+      <FocusAwareStatusBar backgroundColor={Colours.dark} barStyle="light-content" animated={true} />
       <Search contentTitle="District Level Nodal Officers" />
       <FlatList
         data={teams}
